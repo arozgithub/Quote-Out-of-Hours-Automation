@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElevateAI | Field Service Automation</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Ionicons for Icons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <!-- QR Code Library -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+</head>
+
+<body>
+    <!-- 3D Elevator Loading Animation -->
+    <div class="elevator-loader" id="elevatorLoader">
+        <div class="elevator-shaft">
+            <div class="elevator-car">
+                <div class="elevator-doors">
+                    <div class="door left"></div>
+                    <div class="door right"></div>
+                </div>
+            </div>
+            <div class="floor-indicator">
+                <span id="floorNum">1</span>
+            </div>
+        </div>
+        <p class="loader-text">Sending Request...</p>
+    </div>
+
+    <!-- Animated Background Particles -->
+    <div class="particles-bg" id="particles"></div>
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top-btn" id="scrollTopBtn" onclick="scrollToTop()">
+        <ion-icon name="chevron-up"></ion-icon>
+    </button>
+
+    <div class="container">
+
+        <!-- Header -->
+        <header>
+            <div class="brand animated-logo">
+                <ion-icon name="cube-outline"
+                    style="vertical-align: middle; margin-right: 10px; font-size: 1.5rem;"></ion-icon>
+                ElevateAI
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <!-- Language Selector -->
+                <select class="lang-select" id="langSelect" onchange="changeLanguage(this.value)"
+                    title="Select Language">
+                    <option value="en">🇺🇸 EN</option>
+                    <option value="ur">🇵🇰 اردو</option>
+                    <option value="ar">🇸🇦 عربي</option>
+                    <option value="es">🇪🇸 ES</option>
+                </select>
+
+                <!-- Theme Selector -->
+                <select class="theme-select" id="themeSelect" onchange="changeColorTheme(this.value)"
+                    title="Color Theme">
+                    <option value="purple">💜 Purple</option>
+                    <option value="blue">💙 Blue</option>
+                    <option value="green">💚 Green</option>
+                    <option value="orange">🧡 Orange</option>
+                </select>
+
+                <div class="status-badge">
+                    <div class="live-dot"></div>
+                    <span data-i18n="aiActive">AI Agent Active</span>
+                </div>
+
+                <!-- Dark/Light Mode Toggle -->
+                <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+                    <ion-icon name="moon" class="theme-icon-dark"></ion-icon>
+                    <ion-icon name="sunny" class="theme-icon-light"></ion-icon>
+                </button>
+
+                <!-- Quote History Button -->
+                <button class="btn-icon" onclick="toggleHistoryPanel()" title="Quote History">
+                    <ion-icon name="time-outline"></ion-icon>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Layout -->
+        <div class="app-grid">
+
+            <!-- LEFT: Smart Intake Form -->
+            <div class="glass-panel card-hover" style="padding: 2.5rem 3rem;">
+
+                <div id="form-intro">
+                    <h1 data-i18n="serviceRequest">Service Request</h1>
+                    <p class="subtitle" data-i18n="subtitle">AI-powered dispatch & quotation system. Tell us what you
+                        need, and we'll handle
+                        the logistics.</p>
+                    <!-- Draft indicator -->
+                    <div class="draft-indicator" id="draftIndicator" style="display: none;">
+                        <ion-icon name="cloud-done-outline"></ion-icon>
+                        <span data-i18n="draftSaved">Draft saved</span>
+                    </div>
+                </div>
+
+                <!-- Wizard Progress Bar -->
+                <div class="wizard-progress-container">
+                    <div class="wizard-progress-bar">
+                        <div class="wizard-progress-fill" id="progressFill" style="width: 25%;"></div>
+                    </div>
+                    <div class="wizard-progress">
+                        <div class="step-indicator active" id="progress-1" data-tooltip="Building Info"></div>
+                        <div class="step-indicator" id="progress-2" data-tooltip="Issue Details"></div>
+                        <div class="step-indicator" id="progress-3" data-tooltip="Contact Info"></div>
+                        <div class="step-indicator" id="progress-4" data-tooltip="Review"></div>
+                    </div>
+                </div>
+
+                <form id="intake-form" onsubmit="event.preventDefault();">
+
+                    <!-- STEP 1: Building Details -->
+                    <div class="step-content active" id="step-1">
+                        <h2 data-i18n="buildingInfo">Building Information</h2>
+
+                        <div class="form-group">
+                            <label>Building Usage</label>
+                            <div class="selection-grid" id="building-type-selection">
+                                <div class="selection-card" onclick="selectOption('buildingType', 'Residential', this)">
+                                    <ion-icon name="home-outline"></ion-icon>
+                                    Residential
+                                </div>
+                                <div class="selection-card" onclick="selectOption('buildingType', 'Commercial', this)">
+                                    <ion-icon name="business-outline"></ion-icon>
+                                    Commercial
+                                </div>
+                                <div class="selection-card" onclick="selectOption('buildingType', 'Industrial', this)">
+                                    <ion-icon name="cog-outline"></ion-icon>
+                                    Industrial
+                                </div>
+                            </div>
+                            <input type="hidden" id="buildingType" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="elevatorBrand">Elevator Brand</label>
+                            <select id="elevatorBrand">
+                                <option value="" disabled selected>Select Brand</option>
+                                <option value="Otis">Otis</option>
+                                <option value="Schindler">Schindler</option>
+                                <option value="Kone">Kone</option>
+                                <option value="ThyssenKrupp">ThyssenKrupp</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="floors">Number of Floors Served</label>
+                            <input type="number" id="floors" placeholder="e.g. 12" min="1">
+                        </div>
+
+                        <div style="text-align: right; margin-top: 2rem;">
+                            <button class="btn btn-primary" onclick="nextStep(2)">
+                                Continue <ion-icon name="arrow-forward-outline"></ion-icon>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: Issue & Urgency -->
+                    <div class="step-content" id="step-2">
+                        <h2>What's the issue?</h2>
+
+                        <div class="form-group">
+                            <label>Service Type</label>
+                            <div class="selection-grid">
+                                <div class="selection-card" onclick="selectOption('serviceType', 'Breakdown', this)">
+                                    <ion-icon name="alert-circle-outline"></ion-icon>
+                                    Breakdown
+                                </div>
+                                <div class="selection-card" onclick="selectOption('serviceType', 'Maintenance', this)">
+                                    <ion-icon name="construct-outline"></ion-icon>
+                                    Maintenance
+                                </div>
+                                <div class="selection-card" onclick="selectOption('serviceType', 'Inspection', this)">
+                                    <ion-icon name="clipboard-outline"></ion-icon>
+                                    Inspection
+                                </div>
+                            </div>
+                            <input type="hidden" id="serviceType">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Urgency Level</label>
+                            <div class="selection-grid">
+                                <div class="selection-card" onclick="selectOption('urgency', 'Normal', this)">
+                                    <ion-icon name="thermometer-outline"></ion-icon>
+                                    Normal
+                                </div>
+                                <div class="selection-card" onclick="selectOption('urgency', 'High', this)">
+                                    <ion-icon name="warning-outline" style="color: var(--warning);"></ion-icon>
+                                    High Priority
+                                </div>
+                                <div class="selection-card" onclick="selectOption('urgency', 'Emergency', this)">
+                                    <ion-icon name="flame-outline" style="color: var(--danger);"></ion-icon>
+                                    Emergency
+                                </div>
+                            </div>
+                            <input type="hidden" id="urgency">
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+                            <button class="btn btn-ghost" onclick="prevStep(1)">Back</button>
+                            <button class="btn btn-primary" onclick="nextStep(3)">Continue <ion-icon
+                                    name="arrow-forward-outline"></ion-icon></button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: Logistics -->
+                    <div class="step-content" id="step-3">
+                        <h2>Location & Contact</h2>
+
+                        <div class="form-group">
+                            <label for="address">Service Address</label>
+                            <input type="text" id="address" placeholder="123 Main St, New York, NY">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="visitDate">Preferred Date of Visit</label>
+                            <input type="date" id="visitDate">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactName">Contact Name</label>
+                            <input type="text" id="contactName" placeholder="John Doe">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactEmail">Email Address *</label>
+                            <input type="email" id="contactEmail" placeholder="john@company.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Photos/Videos of Issue</label>
+                            <div class="upload-area" onmouseover="this.style.borderColor='var(--primary)'"
+                                onmouseout="this.style.borderColor='var(--border-glass)'">
+                                <ion-icon name="cloud-upload-outline"></ion-icon>
+                                <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.75rem;">Drag & drop
+                                    or click to upload media</p>
+                                <input type="file" id="mediaUpload" multiple style="display: none;">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Additional Details</label>
+                            <div class="voice-input-wrapper">
+                                <textarea id="description" rows="3"
+                                    placeholder="Describe the noise, error code, or specific issue..."></textarea>
+                                <button type="button" class="voice-btn" id="voiceBtn" onclick="toggleVoiceInput()"
+                                    title="Voice Input">
+                                    <ion-icon name="mic-outline" id="micIcon"></ion-icon>
+                                </button>
+                            </div>
+                            <div class="voice-status" id="voiceStatus" style="display: none;">
+                                <div class="voice-wave"></div>
+                                <span>Listening...</span>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+                            <button class="btn btn-ghost" onclick="prevStep(2)">Back</button>
+                            <button class="btn btn-primary" onclick="nextStep(4)">Review & Submit <ion-icon
+                                    name="arrow-forward-outline"></ion-icon></button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 4: Review -->
+                    <div class="step-content" id="step-4">
+                        <h2>Review Request</h2>
+                        <p class="subtitle">Please confirm the details below.</p>
+
+                        <div class="glass-panel"
+                            style="padding: 1.5rem; background: rgba(0,0,0,0.2); margin-bottom: 1.5rem;">
+                            <div id="review-summary">
+                                <!-- JS will populate this -->
+                            </div>
+                        </div>
+
+                        <div class="form-group"
+                            style="border: 1px solid var(--border-glass); padding: 1.5rem; border-radius: var(--radius-sm); background: rgba(59, 130, 246, 0.05);">
+                            <label for="webhookUrl"
+                                style="color: var(--primary); display: flex; align-items: center; gap: 0.5rem;">
+                                <ion-icon name="link-outline"></ion-icon>
+                                n8n Webhook URL (Required)
+                            </label>
+                            <input type="text" id="webhookUrl" placeholder="https://your-n8n.com/webhook-test/..."
+                                value="https://jldev.app.n8n.cloud/webhook-test/eb7a29e0-6188-4c94-9dff-5b93420b820b">
+
+                            <button class="btn btn-ghost" onclick="testConnection(event)"
+                                style="margin-top: 1rem; width: 100%; border-style: dashed;">
+                                <ion-icon name="radio-outline"></ion-icon> Test Connection
+                            </button>
+
+                            <div
+                                style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+                                <p style="margin-bottom: 0.5rem; color: var(--warning);">
+                                    <ion-icon name="information-circle-outline"></ion-icon>
+                                    <strong>How to fix the 404 error:</strong>
+                                </p>
+                                <ul style="padding-left: 1.2rem; margin: 0;">
+                                    <li>Open your <strong>Webhook - Quote Request</strong> node in n8n.</li>
+                                    <li>Click <strong>'Webhook URLs'</strong> inside the node.</li>
+                                    <li>Copy the <strong>Test URL</strong> (not Production URL).</li>
+                                    <li>Paste it into the box above.</li>
+                                    <li>Click <strong>'Execute Workflow'</strong> in n8n before submitting this form.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="jobWebhookUrl">Job Creation Webhook URL (Step 2)</label>
+                            <input type="text" id="jobWebhookUrl"
+                                placeholder="https://your-n8n-instance.com/webhook/..."
+                                value="https://jldev.app.n8n.cloud/webhook/webhook1-data">
+                            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">Separate
+                                workflows for quoting vs job creation.</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="negotiationWebhookUrl">Negotiation Webhook URL (Chat)</label>
+                            <input type="text" id="negotiationWebhookUrl"
+                                placeholder="https://your-n8n-instance.com/webhook/..."
+                                value="https://jldev.app.n8n.cloud/webhook/3bd97475-0f8d-44b1-a388-12f25c5d5adc">
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+                            <button class="btn btn-ghost" onclick="prevStep(3)">Back</button>
+                            <button class="btn btn-primary" id="submit-btn" onclick="submitForm()">
+                                Submit Request <ion-icon name="paper-plane-outline"></ion-icon>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- SUCCESS STATE -->
+                    <div class="step-content" id="step-success" style="text-align: center; padding: 3rem 0;">
+                        <!-- Confetti Canvas -->
+                        <canvas id="confetti-canvas"
+                            style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000;"></canvas>
+
+                        <ion-icon name="checkmark-circle" class="success-icon"
+                            style="font-size: 5rem; color: var(--success); margin-bottom: 1.5rem;"></ion-icon>
+                        <h2>Request Submitted!</h2>
+                        <p class="subtitle" style="margin-bottom: 1.5rem;">Your quote will be sent to your email.</p>
+
+                        <div id="quote-result" style="overflow: visible;"></div>
+
+                        <!-- Status Tracker -->
+                        <div class="status-tracker" id="statusTracker" style="display: none;">
+                            <div class="tracker-step completed" id="tracker-1">
+                                <div class="tracker-icon"><ion-icon name="checkmark"></ion-icon></div>
+                                <span>Request Sent</span>
+                            </div>
+                            <div class="tracker-line completed"></div>
+                            <div class="tracker-step active" id="tracker-2">
+                                <div class="tracker-icon"><ion-icon name="mail-outline"></ion-icon></div>
+                                <span>Email Processing</span>
+                            </div>
+                            <div class="tracker-line"></div>
+                            <div class="tracker-step" id="tracker-3">
+                                <div class="tracker-icon"><ion-icon name="document-text-outline"></ion-icon></div>
+                                <span>Quote Ready</span>
+                            </div>
+                            <div class="tracker-line"></div>
+                            <div class="tracker-step" id="tracker-4">
+                                <div class="tracker-icon"><ion-icon name="checkmark-done-outline"></ion-icon></div>
+                                <span>Confirmed</span>
+                            </div>
+                        </div>
+
+                        <p
+                            style="color: var(--text-muted); max-width: 400px; margin: 1.5rem auto 0; font-size: 0.9rem;">
+                            Check your email for the detailed quote. Reply to accept or negotiate.
+                        </p>
+                        <button class="btn btn-ghost" style="margin-top: 1.5rem;" onclick="location.reload()">
+                            <ion-icon name="add-circle-outline"></ion-icon> New Request
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+
+            <!-- RIGHT: AI Chat Widget -->
+            <div class="glass-panel chat-widget collapsed" id="chat-widget">
+                <button class="chat-fab" aria-label="Open chat" onclick="toggleChat(true); event.stopPropagation();">
+                    <ion-icon name="chatbubbles"></ion-icon>
+                </button>
+                <div class="chat-header">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div
+                            style="width: 40px; height: 40px; background: linear-gradient(135deg, var(--primary), var(--accent)); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                            <ion-icon name="chatbubble-ellipses" style="font-size: 1.25rem; color: white;"></ion-icon>
+                        </div>
+                        <div>
+                            <div style="font-weight: 700; font-size: 1rem;">Dispatch AI</div>
+                            <div
+                                style="font-size: 0.8rem; color: var(--success); display: flex; align-items: center; gap: 0.4rem;">
+                                <div class="live-dot" style="width: 6px; height: 6px;"></div>
+                                Online & Ready
+                            </div>
+                        </div>
+                    </div>
+                    <button class="chat-close" aria-label="Close chat"
+                        onclick="toggleChat(false); event.stopPropagation();">
+                        <ion-icon name="close"></ion-icon>
+                    </button>
+                </div>
+
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message bot">
+                        👋 Hello! I'm your AI Field Service Assistant. I can help you book a technician, check status,
+                        or
+                        answer questions about our rates. How can I help?
+                    </div>
+                </div>
+
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Type your message..."
+                        onkeypress="handleChatKey(event)">
+                    <button class="btn btn-primary" style="padding: 0 1.25rem;" onclick="sendChatMessage()">
+                        <ion-icon name="send"></ion-icon>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Keyboard Shortcuts Modal -->
+    <div class="shortcuts-modal" id="shortcutsModal">
+        <div class="shortcuts-content">
+            <h3><ion-icon name="flash-outline"></ion-icon> Keyboard Shortcuts</h3>
+            <div class="shortcut-item"><kbd>Alt</kbd> + <kbd>N</kbd> <span>Next Step</span></div>
+            <div class="shortcut-item"><kbd>Alt</kbd> + <kbd>B</kbd> <span>Previous Step</span></div>
+            <div class="shortcut-item"><kbd>Alt</kbd> + <kbd>S</kbd> <span>Submit Form</span></div>
+            <div class="shortcut-item"><kbd>Alt</kbd> + <kbd>C</kbd> <span>Open Chat</span></div>
+            <div class="shortcut-item"><kbd>Alt</kbd> + <kbd>T</kbd> <span>Toggle Theme</span></div>
+            <div class="shortcut-item"><kbd>?</kbd> <span>Show Shortcuts</span></div>
+            <button class="btn btn-ghost" onclick="toggleShortcuts()">Close</button>
+        </div>
+    </div>
+
+    <!-- Quote History Panel -->
+    <div class="history-panel" id="historyPanel">
+        <div class="history-header">
+            <h3><ion-icon name="time-outline"></ion-icon> <span data-i18n="quoteHistory">Quote History</span></h3>
+            <button class="btn-icon" onclick="toggleHistoryPanel()">
+                <ion-icon name="close"></ion-icon>
+            </button>
+        </div>
+        <div class="history-list" id="historyList">
+            <!-- Populated by JS -->
+        </div>
+        <button class="btn btn-danger" onclick="clearHistory()" style="width: 100%; margin-top: 1rem;">
+            <ion-icon name="trash-outline"></ion-icon> Clear All
+        </button>
+    </div>
+
+    <!-- Rating Modal -->
+    <div class="rating-modal" id="ratingModal">
+        <div class="rating-content">
+            <h3><ion-icon name="star-outline"></ion-icon> <span data-i18n="rateService">Rate Our Service</span></h3>
+            <div class="star-rating" id="starRating">
+                <ion-icon name="star-outline" data-rating="1" onclick="setRating(1)"></ion-icon>
+                <ion-icon name="star-outline" data-rating="2" onclick="setRating(2)"></ion-icon>
+                <ion-icon name="star-outline" data-rating="3" onclick="setRating(3)"></ion-icon>
+                <ion-icon name="star-outline" data-rating="4" onclick="setRating(4)"></ion-icon>
+                <ion-icon name="star-outline" data-rating="5" onclick="setRating(5)"></ion-icon>
+            </div>
+            <textarea id="ratingFeedback" placeholder="Share your feedback (optional)..." rows="3"></textarea>
+            <button class="btn btn-primary" onclick="submitRating()" style="width: 100%; margin-top: 1rem;">
+                Submit Rating
+            </button>
+            <button class="btn btn-ghost" onclick="closeRatingModal()">Skip</button>
+        </div>
+    </div>
+
+    <!-- Keyboard Shortcut Hint -->
+    <div class="shortcut-hint" onclick="toggleShortcuts()">
+        <kbd>?</kbd> Shortcuts
+    </div>
+
+    <script src="script_email.js?v=5"></script>
+</body>
+
+</html>

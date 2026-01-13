@@ -1,0 +1,60 @@
+{
+  "name": "quote-out-of-hours-automation",
+  "version": "1.0.0",
+  "description": "AI-powered quote generation and field service automation system",
+  "build": {
+    "date": "2026-01-13",
+    "files": [
+      "index.html",
+      "index_email.html",
+      "script.js",
+      "script_email.js",
+      "style.css"
+    ],
+    "configuration": [
+      ".htaccess",
+      "deploy.bat",
+      "README.md",
+      "DEPLOYMENT.md"
+    ]
+  },
+  "deployment": {
+    "type": "static",
+    "recommended_platforms": [
+      "Netlify",
+      "Vercel",
+      "GitHub Pages",
+      "Cloudflare Pages",
+      "AWS S3",
+      "Traditional Web Hosting"
+    ]
+  },
+  "dependencies": {
+    "external": [
+      "ionicons@7.1.0 (CDN)",
+      "qrcodejs@1.0.0 (CDN)"
+    ],
+    "backend": [
+      "n8n workflow webhooks"
+    ]
+  },
+  "webhooks": {
+    "quote_generation": "https://jldev.app.n8n.cloud/webhook/intake",
+    "job_creation": "https://jldev.app.n8n.cloud/webhook/webhook1-data",
+    "negotiation_chat": "https://jldev.app.n8n.cloud/webhook/3bd97475-0f8d-44b1-a388-12f25c5d5adc",
+    "note": "Update these URLs before deployment"
+  },
+  "features": [
+    "Multi-step wizard form",
+    "AI-powered chat assistant",
+    "Voice input support",
+    "Real-time quote generation",
+    "PDF export",
+    "Excel export",
+    "QR code sharing",
+    "Digital signature",
+    "Multi-language support (EN, UR, AR, ES)",
+    "Dark/Light theme toggle",
+    "Quote history tracking"
+  ]
+}
