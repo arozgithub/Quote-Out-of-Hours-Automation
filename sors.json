@@ -1,0 +1,1037 @@
+[
+  {
+    "id": "SOR-001",
+    "category": "breakdown",
+    "service_name": "Emergency Elevator Rescue (Entrapment)",
+    "description": "Emergency release of passengers trapped in elevator car with safety protocols.",
+    "building_type_multiplier": {
+      "residential": 1.0,
+      "commercial": 1.2,
+      "industrial": 1.3
+    },
+    "urgency_multiplier": {
+      "normal": 1.0,
+      "high": 1.5,
+      "emergency": 2.5
+    },
+    "base_rate": {
+      "currency": "USD",
+      "amount": 350.00
+    },
+    "labor_rates": {
+      "technician_senior_hourly": 150.00,
+      "technician_junior_hourly": 95.00,
+      "minimum_hours": 2,
+      "after_hours_multiplier": 1.5,
+      "weekend_multiplier": 1.75,
+      "holiday_multiplier": 2.0
+    },
+    "estimated_duration_hours": 1.5,
+    "travel_fee": {
+      "base": 75.00,
+      "per_mile_over_20": 2.50
+    },
+    "brands_supported": [
+      "Otis",
+      "Schindler",
+      "Kone",
+      "ThyssenKrupp",
+      "Mitsubishi",
+      "Generic"
+    ],
+    "compliance_codes": [
+      "ASME A17.1",
+      "ASME A17.2",
+      "Local Fire Code"
+    ]
+  },
+  {
+    "id": "SOR-002",
+    "category": "breakdown",
+    "service_name": "Door Operator Repair",
+    "description": "Diagnosis and repair of elevator door operator mechanism including motors, belts, and sensors.",
+    "building_type_multiplier": {
+      "residential": 1.0,
+      "commercial": 1.15,
+      "industrial": 1.25
+    },
+    "urgency_multiplier": {
+      "normal": 1.0,
+      "high": 1.25,
+      "emergency": 1.75
+    },
+    "base_rate": {
+      "currency": "USD",
+      "amount": 200.00
+    },
+    "labor_rates": {
+      "technician_senior_hourly": 150.00,
+      "technician_junior_hourly": 95.00,
+      "minimum_hours": 3,
+      "after_hours_multiplier": 1.5,
+      "weekend_multiplier": 1.75,
+      "holiday_multiplier": 2.0
+    },
+    "estimated_duration_hours": 3.0,
+    "parts_markup_percent": 20,
+    "common_parts": [
+      {
+        "part_id": "DR-Belt-01",
+        "name": "Door Drive Belt",
+        "est_cost": 45.00,
+        "brands": [
+          "All"
+        ]
+      },
+      {
+        "part_id": "DR-Sens-02",
+        "name": "Infrared Door Curtain",
+        "est_cost": 250.00,
+        "brands": [
+          "All"
+        ]
+      },
+      {
+        "part_id": "DR-Motor-03",
+        "name": "Door Motor Assembly",
+        "est_cost": 680.00,
+        "brands": [
+          "Otis",
+          "Schindler"
+        ]
+      },
+      {
+        "part_id": "DR-Roller-04",
+        "name": "Door Roller Set",
+        "est_cost": 120.00,
+        "brands": [
+          "All"
+        ]
+      }
+    ],
+    "travel_fee": {
+      "base": 75.00,
+      "per_mile_over_20": 2.50
+    },
+    "brands_supported": [
+      "Otis",
+      "Schindler",
+      "Kone",
+      "ThyssenKrupp"
+    ]
+  },
+  {
+    "id": "SOR-003",
+    "category": "breakdown",
+    "service_name": "Motor Drive Repair",
+    "description": "Motor and drive system troubleshooting including VFD, contactors, and brake systems.",
+    "building_type_multiplier": {
+      "residential": 1.0,
+      "commercial": 1.3,
+      "industrial": 1.5
+    },
+    "urgency_multiplier": {
+      "normal": 1.0,
+      "high": 1.4,
+      "emergency": 2.0
+    },
+    "base_rate": {
+      "currency": "USD",
+      "amount": 450.00
+    },
+    "labor_rates": {
+      "technician_senior_hourly": 175.00,
+      "technician_junior_hourly": 110.00,
+      "minimum_hours": 4,
+      "after_hours_multiplier": 1.5,
+      "weekend_multiplier": 1.75,
+      "holiday_multiplier": 2.0
+    },
+    "estimated_duration_hours": 5.0,
+    "parts_markup_percent": 18,
+    "common_parts": [
+      {
+        "part_id": "MT-VFD-01",
+        "name": "Variable Frequency Drive",
+        "est_cost": 3200.00,
+        "brands": [
+          "Otis",
+          "Kone"
+        ]
+      },
+      {
+        "part_id": "MT-BRK-02",
+        "name": "Brake Coil Assembly",
+        "est_cost": 420.00,
+        "brands": [
+          "All"
+        ]
+      },
+      {
+        "part_id": "MT-CNT-03",
+        "name": "Main Contactor",
+        "est_cost": 380.00,
+        "brands": [
+          "All"
+        ]
+      }
+    ],
+    "travel_fee": {
+      "base": 100.00,
+      "per_mile_over_20": 3.00
+    },
+    "brands_supported": [
+      "Otis",
+      "Schindler",
+      "Kone",
+      "ThyssenKrupp",
+      "Mitsubishi"
+    ]
+  },
+  {
+    "id": "SOR-004",
+    "category": "breakdown",
+    "service_name": "Control System Fault Diagnosis",
+    "description": "Diagnostic and repair of control panel faults, error codes, and communication issues.",
+    "building_type_multiplier": {
+      "residential": 1.0,
+      "commercial": 1.25,
+      "industrial": 1.4
+    },
+    "urgency_multiplier": {
+      "normal": 1.0,
+      "high": 1.3,
+      "emergency": 1.8
+    },
+    "base_rate": {
+      "currency": "USD",
+      "amount": 280.00
+    },
+    "labor_rates": {
+      "technician_senior_hourly": 165.00,
+      "technician_junior_hourly": 100.00,
+      "minimum_hours": 2,
+      "after_hours_multiplier": 1.5,
+      "weekend_multiplier": 1.75,
+      "holiday_multiplier": 2.0
+    },
+    "estimated_duration_hours": 3.0,
+    "parts_markup_percent": 15,
+    "common_parts": [
+      {
+        "part_id": "CT-PCB-01",
+        "name": "Main Logic Board",
+        "est_cost": 2200.00,
+        "brands": [
+          "Otis",
+          "Schindler"
+        ]
+      },
+      {
+        "part_id": "CT-CPU-02",
+        "name": "CPU Module",
+        "est_cost": 1650.00,
+        "brands": [
+          "Kone"
+        ]
+      },
+      {
+        "part_id": "CT-RLY-03",
+        "name": "Safety Relay Module",
+        "est_cost": 340.00,
+        "brands": [
+          "All"
+        ]
+      }
+    ],
+    "travel_fee": {
+      "base": 75.00,
+      "per_mile_over_20": 2.50
+    },
+    "brands_supported": [
+      "Otis",
+      "Schindler",
+      "Kone",
+      "ThyssenKrupp"
+    ]
+  },
+  {
+    "id": "SOR-005",
+    "category": "breakdown",
+    "service_name": "Hydraulic System Repair",
+    "description": "Hydraulic jack, valve, or pump repair including fluid replacement and pressure testing.",
+    "building_type_multiplier": {
+      "residential": 1.0,
+      "commercial": 1.2,
+      "industrial": 1.35
+    },
+    "urgency_multiplier": {
+      "normal": 1.0,
+      "high": 1.35,
+      "emergency": 1.9
+    },
+    "base_rate": {
+      "currency": "USD",
+      "amount": 520.00
+    },
+    "labor_rates": {
+      "technician_senior_hourly": 160.00,
+      "technician_junior_hourly": 105.00,
+      "minimum_hours": 4,
+      "after_hours_multiplier": 1.5,
+      "weekend_multiplier": 1.75,
+      "holiday_multiplier": 2.0
+    },
+    "estimated_duration_hours": 6.0,
+    "parts_markup_percent": 20,
+    "common_parts": [
+      {
+        "part_id": "HY-PMP-01",
+        "name": "Hydraulic Pump Unit",
+        "est_cost": 2800.00,
+        "brands": [
+          "All"
+        ]
+      },
+      {
+        "part_id": "HY-VLV-02",
+        "name": "Control Valve Assembly",
+        "est_cost": 980.00,
+        "brands": [
+          "All"
+        ]
+      },
+      {
+        "part_id": "HY-FLD-03",
+        "name": "Hydraulic Fluid (5 gal)",
+        "est_cost": 180.00,
+        "brands": [
+          "All"
+        ]
+      },
+      {
+        "part_id": "HY-PST-04",
+        "name": "Piston Seal Kit",
+        "est_cost": 420.00,
+        "brands": [
+          "All"
+        ]
+      }
+    ],
+    "travel_fee": {
+      "base": 100.00,
+      "per_mile_over_20": 3.00
+    },
+    "brands_supported": [
+      "All"
+    ]
+  },
+  {
+    "id": "SOR-006",
+    "category": "breakdown",
+    "service_name": "Cable/Rope Replacement",
+    "description": "Replacement of worn or damaged suspension cables/ropes including re-roving.",
+    "building_type_multiplier": {
+      "residential": 1.0,
+      "commercial": 1.4,
+      "industrial": 1.6
+    },
+    "urgency_multiplier": {
+      "normal": 1.0,
+      "high": 1.2,
+      "emergency": 1.5
+    },
+    "base_rate": {
+      "currency": "USD",
+      "amount": 800.00
+    },
+    "labor_rates": {
+      "technician_senior_hourly": 170.00,
+      "technician_junior_hourly": 110.00,
+      "minimum_hours": 8,
+      "after_hours_multiplier": 1.5,
+      "weekend_multiplier": 1.75,
+      "holiday_multiplier": 2.0
+    },
+    "estimated_duration_hours": 10.0,
+    "parts_markup_percent": 15,
+    "common_parts": [
+      {
+        "part_id": "CB-RPE-01",
+        "name": "Steel Suspension Rope (per foot)",
+        "est_cost": 12.00,
+        "brands": [
+          "All"
+        ]
+      },
+      {
+        "part_id": "CB-SKT-02",
+        "name": "Rope Socket Set",
+        "est_cost": 650.00,
+        "brands": [
+          "All"
+        ]
+      },
+      {
+        "part_id": "CB-FAS-03",
+        "name": "Fastener Kit",
+        "est_cost": 120.00,
+        "brands": [
+          "All"
+        ]
+      }
+    ],
+    "travel_fee": {
+      "base": 150.00,
+      "per_mile_over_20": 4.00
+    },
+    "brands_supported": [
+      "All"
+    ],
+    "notes": "Price varies significantly based on building height and number of ropes."
+  },
+  {
+    "id": "SOR-007",
+    "category": "breakdown",
+    "service_name": "Noise Investigation & Troubleshooting",
+    "description": "Investigate and diagnose source of squeaking, grinding, or banging noises.",
+    "building_type_multiplier": {
+      "residential": 1.0,
+      "commercial": 1.1,
+      "industrial": 1.2
+    },
+    "urgency_multiplier": {
+      "normal": 1.0,
+      "high": 1.15,
+      "emergency": 1.4
+    },
+    "base_rate": {
+      "currency": "USD",
+      "amount": 150.00
+    },
+    "labor_rates": {
+      "technician_senior_hourly": 135.00,
+      "technician_junior_hourly": 90.00,
+      "minimum_hours": 1,
+      "after_hours_multiplier": 1.5,
+      "weekend_multiplier": 1.75,
+      "holiday_multiplier": 2.0
+    },
+    "estimated_duration_hours": 1.5,
+    "travel_fee": {
+      "base": 65.00,
+      "per_mile_over_20": 2.00
+    },
+    "brands_supported": [
+      "All"
+    ],
+    "notes": "Diagnostic only. Repair or adjustments quoted separately based on findings."
+  },
+  {
+    "id": "SOR-008",
+    "category": "maintenance",
+    "service_name": "Monthly Preventive Maintenance - Hydraulic",
+    "description": "Routine maintenance including fluids check, valve adjustment, safety circuit testing, and lubrication.",
+    "building_type_multiplier": {
+      "residential": 1.0,
+      "commercial": 1.15,
+      "industrial": 1.25
+    },
+    "urgency_multiplier": {
+      "normal": 1.0,
+      "high": 1.0,
+      "emergency": 1.0
+    },
+    "base_rate": {
+      "currency": "USD",
+      "amount": 180.00
+    },
+    "labor_rates": {
+      "technician_senior_hourly": 120.00,
+      "technician_junior_hourly": 85.00,
+      "minimum_hours": 1,
+      "after_hours_multiplier": 1.3,
+      "weekend_multiplier": 1.5,
+      "holiday_multiplier": 1.5
+    },
+    "estimated_duration_hours": 1.0,
+    "parts_allowance": 25.00,
+    "travel_fee": {
+      "base": 50.00,
+      "per_mile_over_20": 2.00
+    },
+    "brands_supported": [
+      "All"
+    ],
+    "checklist_required": true,
+    "contract_discount": 0.10
+  },
+  {
+    "id": "SOR-009",
+    "category": "maintenance",
+    "service_name": "Monthly Preventive Maintenance - Traction (Cable)",
+    "description": "Routine inspection of cables, sheaves, motor brushes, governor, and safety systems.",
+    "building_type_multiplier": {
+      "residential": 1.0,
+      "commercial": 1.2,
+      "industrial": 1.3
+    },
+    "urgency_multiplier": {
+      "normal": 1.0,
+      "high": 1.0,
+      "emergency": 1.0
+    },
+    "base_rate": {
+      "currency": "USD",
+      "amount": 220.00
+    },
+    "labor_rates": {
+      "technician_senior_hourly": 135.00,
+      "technician_junior_hourly": 90.00,
+      "minimum_hours": 1.5,
+      "after_hours_multiplier": 1.3,
+      "weekend_multiplier": 1.5,
+      "holiday_multiplier": 1.5
+    },
+    "estimated_duration_hours": 1.5,
+    "parts_allowance": 30.00,
+    "travel_fee": {
+      "base": 50.00,
+      "per_mile_over_20": 2.00
+    },
+    "brands_supported": [
+      "Otis",
+      "Kone",
+      "Schindler",
+      "ThyssenKrupp"
+    ],
+    "checklist_required": true,
+    "contract_discount": 0.10
+  },
+  {
+    "id": "SOR-010",
+    "category": "maintenance",
+    "service_name": "Quarterly Full-Service Maintenance",
+    "description": "Comprehensive quarterly service including all PM tasks plus detailed component testing and calibration.",
+    "building_type_multiplier": {
+      "residential": 1.0,
+      "commercial": 1.25,
+      "industrial": 1.4
+    },
+    "urgency_multiplier": {
+      "normal": 1.0,
+      "high": 1.0,
+      "emergency": 1.0
+    },
+    "base_rate": {
+      "currency": "USD",
+      "amount": 480.00
+    },
+    "labor_rates": {
+      "technician_senior_hourly": 140.00,
+      "technician_junior_hourly": 95.00,
+      "minimum_hours": 3,
+      "after_hours_multiplier": 1.3,
+      "weekend_multiplier": 1.5,
+      "holiday_multiplier": 1.5
+    },
+    "estimated_duration_hours": 4.0,
+    "parts_allowance": 75.00,
+    "travel_fee": {
+      "base": 60.00,
+      "per_mile_over_20": 2.50
+    },
+    "brands_supported": [
+      "All"
+    ],
+    "checklist_required": true,
+    "contract_discount": 0.12
+  },
+  {
+    "id": "SOR-011",
+    "category": "inspection",
+    "service_name": "Annual Safety Inspection - Category 1",
+    "description": "Mandatory annual safety test including pressure relief, governor, and safeties (no-load test).",
+    "building_type_multiplier": {
+      "residential": 1.0,
+      "commercial": 1.2,
+      "industrial": 1.3
+    },
+    "urgency_multiplier": {
+      "normal": 1.0,
+      "high": 1.3,
+      "emergency": 1.5
+    },
+    "base_rate": {
+      "currency": "USD",
+      "amount": 650.00
+    },
+    "labor_rates": {
+      "technician_senior_hourly": 145.00,
+      "technician_junior_hourly": 95.00,
+      "minimum_hours": 3,
+      "after_hours_multiplier": 1.5,
+      "weekend_multiplier": 1.75,
+      "holiday_multiplier": 2.0
+    },
+    "estimated_duration_hours": 4.0,
+    "travel_fee": {
+      "base": 75.00,
+      "per_mile_over_20": 2.50
+    },
+    "brands_supported": [
+      "All"
+    ],
+    "requires_witness": true,
+    "certification_included": true,
+    "compliance_codes": [
+      "ASME A17.1",
+      "ASME A17.2"
+    ]
+  },
+  {
+    "id": "SOR-012",
+    "category": "inspection",
+    "service_name": "Annual Safety Inspection - Category 5 (Full Load)",
+    "description": "Comprehensive annual inspection with full-load safety testing including all Category 1 tests.",
+    "building_type_multiplier": {
+      "residential": 1.0,
+      "commercial": 1.3,
+      "industrial": 1.5
+    },
+    "urgency_multiplier": {
+      "normal": 1.0,
+      "high": 1.2,
+      "emergency": 1.4
+    },
+    "base_rate": {
+      "currency": "USD",
+      "amount": 950.00
+    },
+    "labor_rates": {
+      "technician_senior_hourly": 155.00,
+      "technician_junior_hourly": 100.00,
+      "minimum_hours": 5,
+      "after_hours_multiplier": 1.5,
+      "weekend_multiplier": 1.75,
+      "holiday_multiplier": 2.0
+    },
+    "estimated_duration_hours": 6.0,
+    "travel_fee": {
+      "base": 100.00,
+      "per_mile_over_20": 3.00
+    },
+    "brands_supported": [
+      "All"
+    ],
+    "requires_witness": true,
+    "load_testing_required": true,
+    "certification_included": true,
+    "compliance_codes": [
+      "ASME A17.1",
+      "ASME A17.2"
+    ]
+  },
+  {
+    "id": "SOR-013",
+    "category": "inspection",
+    "service_name": "Five-Year Load Test",
+    "description": "Mandatory five-year full-load test with 125% rated capacity.",
+    "building_type_multiplier": {
+      "residential": 1.0,
+      "commercial": 1.4,
+      "industrial": 1.6
+    },
+    "urgency_multiplier": {
+      "normal": 1.0,
+      "high": 1.15,
+      "emergency": 1.3
+    },
+    "base_rate": {
+      "currency": "USD",
+      "amount": 1250.00
+    },
+    "labor_rates": {
+      "technician_senior_hourly": 165.00,
+      "technician_junior_hourly": 110.00,
+      "minimum_hours": 6,
+      "after_hours_multiplier": 1.5,
+      "weekend_multiplier": 1.75,
+      "holiday_multiplier": 2.0
+    },
+    "estimated_duration_hours": 8.0,
+    "weight_rental_fee": 450.00,
+    "travel_fee": {
+      "base": 125.00,
+      "per_mile_over_20": 3.50
+    },
+    "brands_supported": [
+      "All"
+    ],
+    "requires_witness": true,
+    "load_testing_required": true,
+    "certification_included": true,
+    "compliance_codes": [
+      "ASME A17.1"
+    ]
+  },
+  {
+    "id": "SOR-014",
+    "category": "modernization",
+    "service_name": "Controller Modernization",
+    "description": "Complete replacement of obsolete relay logic or microprocessor controller with modern system.",
+    "building_type_multiplier": {
+      "residential": 1.0,
+      "commercial": 1.3,
+      "industrial": 1.5
+    },
+    "urgency_multiplier": {
+      "normal": 1.0,
+      "high": 1.1,
+      "emergency": 1.2
+    },
+    "base_rate": {
+      "currency": "USD",
+      "amount": 8500.00
+    },
+    "labor_rates": {
+      "technician_senior_hourly": 180.00,
+      "technician_junior_hourly": 115.00,
+      "minimum_hours": 40,
+      "after_hours_multiplier": 1.5,
+      "weekend_multiplier": 1.75,
+      "holiday_multiplier": 2.0
+    },
+    "estimated_duration_hours": 60.0,
+    "parts_markup_percent": 12,
+    "common_parts": [
+      {
+        "part_id": "MD-CTRL-01",
+        "name": "Modern Microprocessor Controller",
+        "est_cost": 12000.00,
+        "brands": [
+          "Generic"
+        ]
+      },
+      {
+        "part_id": "MD-COP-02",
+        "name": "Car Operating Panel (LCD)",
+        "est_cost": 2200.00,
+        "brands": [
+          "Generic"
+        ]
+      },
+      {
+        "part_id": "MD-HOP-03",
+        "name": "Hall Operating Panel Set",
+        "est_cost": 1800.00,
+        "brands": [
+          "Generic"
+        ]
+      }
+    ],
+    "travel_fee": {
+      "base": 200.00,
+      "per_mile_over_20": 4.00
+    },
+    "brands_supported": [
+      "All"
+    ],
+    "permit_fees_additional": true,
+    "project_management_fee_percent": 8
+  },
+  {
+    "id": "SOR-015",
+    "category": "modernization",
+    "service_name": "Door Equipment Modernization",
+    "description": "Complete replacement of door operator, hangers, tracks, and sills.",
+    "building_type_multiplier": {
+      "residential": 1.0,
+      "commercial": 1.25,
+      "industrial": 1.4
+    },
+    "urgency_multiplier": {
+      "normal": 1.0,
+      "high": 1.1,
+      "emergency": 1.2
+    },
+    "base_rate": {
+      "currency": "USD",
+      "amount": 5200.00
+    },
+    "labor_rates": {
+      "technician_senior_hourly": 170.00,
+      "technician_junior_hourly": 110.00,
+      "minimum_hours": 24,
+      "after_hours_multiplier": 1.5,
+      "weekend_multiplier": 1.75,
+      "holiday_multiplier": 2.0
+    },
+    "estimated_duration_hours": 32.0,
+    "parts_markup_percent": 15,
+    "common_parts": [
+      {
+        "part_id": "MD-DOP-01",
+        "name": "Door Operator with VFD",
+        "est_cost": 4200.00,
+        "brands": [
+          "Generic"
+        ]
+      },
+      {
+        "part_id": "MD-HNG-02",
+        "name": "Hanger System (per opening)",
+        "est_cost": 850.00,
+        "brands": [
+          "Generic"
+        ]
+      },
+      {
+        "part_id": "MD-TRK-03",
+        "name": "Door Track Set",
+        "est_cost": 680.00,
+        "brands": [
+          "Generic"
+        ]
+      },
+      {
+        "part_id": "MD-SIL-04",
+        "name": "Stainless Sill (per opening)",
+        "est_cost": 520.00,
+        "brands": [
+          "Generic"
+        ]
+      }
+    ],
+    "travel_fee": {
+      "base": 150.00,
+      "per_mile_over_20": 3.50
+    },
+    "brands_supported": [
+      "All"
+    ],
+    "project_management_fee_percent": 6
+  },
+  {
+    "id": "SOR-016",
+    "category": "modernization",
+    "service_name": "Signal Fixture Modernization",
+    "description": "Upgrade hall lanterns, position indicators, and car operating panels to LED/LCD.",
+    "building_type_multiplier": {
+      "residential": 1.0,
+      "commercial": 1.2,
+      "industrial": 1.3
+    },
+    "urgency_multiplier": {
+      "normal": 1.0,
+      "high": 1.1,
+      "emergency": 1.15
+    },
+    "base_rate": {
+      "currency": "USD",
+      "amount": 3800.00
+    },
+    "labor_rates": {
+      "technician_senior_hourly": 150.00,
+      "technician_junior_hourly": 100.00,
+      "minimum_hours": 16,
+      "after_hours_multiplier": 1.5,
+      "weekend_multiplier": 1.75,
+      "holiday_multiplier": 2.0
+    },
+    "estimated_duration_hours": 20.0,
+    "parts_markup_percent": 18,
+    "common_parts": [
+      {
+        "part_id": "MD-COP-LED",
+        "name": "LED Car Operating Panel",
+        "est_cost": 1600.00,
+        "brands": [
+          "Generic"
+        ]
+      },
+      {
+        "part_id": "MD-LAN-LED",
+        "name": "LED Hall Lantern (per floor)",
+        "est_cost": 280.00,
+        "brands": [
+          "Generic"
+        ]
+      },
+      {
+        "part_id": "MD-POS-LCD",
+        "name": "LCD Position Indicator",
+        "est_cost": 420.00,
+        "brands": [
+          "Generic"
+        ]
+      }
+    ],
+    "travel_fee": {
+      "base": 100.00,
+      "per_mile_over_20": 3.00
+    },
+    "brands_supported": [
+      "All"
+    ],
+    "project_management_fee_percent": 5
+  },
+  {
+    "id": "SOR-017",
+    "category": "installation",
+    "service_name": "New Elevator Installation - 2-Stop Hydraulic",
+    "description": "Complete turnkey installation of new 2-stop hydraulic elevator system.",
+    "building_type_multiplier": {
+      "residential": 1.0,
+      "commercial": 1.35,
+      "industrial": 1.5
+    },
+    "urgency_multiplier": {
+      "normal": 1.0,
+      "high": 1.05,
+      "emergency": 1.1
+    },
+    "base_rate": {
+      "currency": "USD",
+      "amount": 45000.00
+    },
+    "labor_rates": {
+      "technician_senior_hourly": 185.00,
+      "technician_junior_hourly": 120.00,
+      "minimum_hours": 200,
+      "after_hours_multiplier": 1.5,
+      "weekend_multiplier": 1.75,
+      "holiday_multiplier": 2.0
+    },
+    "estimated_duration_hours": 280.0,
+    "parts_markup_percent": 10,
+    "travel_fee": {
+      "base": 500.00,
+      "per_mile_over_20": 5.00
+    },
+    "brands_supported": [
+      "Generic"
+    ],
+    "permit_fees_additional": true,
+    "engineering_fees_additional": true,
+    "project_management_fee_percent": 12,
+    "notes": "Does not include shaft/hoistway construction or electrical service to machine room."
+  },
+  {
+    "id": "SOR-018",
+    "category": "installation",
+    "service_name": "New Elevator Installation - 4-Stop Traction",
+    "description": "Complete turnkey installation of new 4-stop geared traction elevator system.",
+    "building_type_multiplier": {
+      "residential": 1.0,
+      "commercial": 1.4,
+      "industrial": 1.6
+    },
+    "urgency_multiplier": {
+      "normal": 1.0,
+      "high": 1.05,
+      "emergency": 1.1
+    },
+    "base_rate": {
+      "currency": "USD",
+      "amount": 85000.00
+    },
+    "labor_rates": {
+      "technician_senior_hourly": 195.00,
+      "technician_junior_hourly": 130.00,
+      "minimum_hours": 400,
+      "after_hours_multiplier": 1.5,
+      "weekend_multiplier": 1.75,
+      "holiday_multiplier": 2.0
+    },
+    "estimated_duration_hours": 560.0,
+    "parts_markup_percent": 10,
+    "travel_fee": {
+      "base": 750.00,
+      "per_mile_over_20": 6.00
+    },
+    "brands_supported": [
+      "Generic"
+    ],
+    "permit_fees_additional": true,
+    "engineering_fees_additional": true,
+    "project_management_fee_percent": 15,
+    "notes": "Does not include shaft/hoistway construction, machine room construction, or electrical service."
+  },
+  {
+    "id": "SOR-019",
+    "category": "emergency",
+    "service_name": "Emergency 24/7 Callback Service",
+    "description": "After-hours emergency callback for breakdowns, entrapments, or safety issues.",
+    "building_type_multiplier": {
+      "residential": 1.0,
+      "commercial": 1.2,
+      "industrial": 1.3
+    },
+    "urgency_multiplier": {
+      "normal": 1.0,
+      "high": 1.0,
+      "emergency": 1.0
+    },
+    "base_rate": {
+      "currency": "USD",
+      "amount": 450.00
+    },
+    "labor_rates": {
+      "technician_senior_hourly": 225.00,
+      "technician_junior_hourly": 150.00,
+      "minimum_hours": 2,
+      "after_hours_multiplier": 1.0,
+      "weekend_multiplier": 1.0,
+      "holiday_multiplier": 1.0
+    },
+    "estimated_duration_hours": 2.0,
+    "travel_fee": {
+      "base": 150.00,
+      "per_mile_over_20": 4.00
+    },
+    "brands_supported": [
+      "All"
+    ],
+    "response_time_minutes": 60,
+    "notes": "Base rate applies weeknights 6PM-6AM, weekends, and holidays. Actual repairs billed additionally."
+  },
+  {
+    "id": "SOR-020",
+    "category": "consultation",
+    "service_name": "Engineering Consultation & Assessment",
+    "description": "Professional engineering assessment for code compliance, modernization planning, or system evaluation.",
+    "building_type_multiplier": {
+      "residential": 1.0,
+      "commercial": 1.3,
+      "industrial": 1.4
+    },
+    "urgency_multiplier": {
+      "normal": 1.0,
+      "high": 1.2,
+      "emergency": 1.4
+    },
+    "base_rate": {
+      "currency": "USD",
+      "amount": 850.00
+    },
+    "labor_rates": {
+      "engineer_hourly": 200.00,
+      "technician_senior_hourly": 165.00,
+      "minimum_hours": 4,
+      "after_hours_multiplier": 1.3,
+      "weekend_multiplier": 1.5,
+      "holiday_multiplier": 1.5
+    },
+    "estimated_duration_hours": 4.0,
+    "travel_fee": {
+      "base": 125.00,
+      "per_mile_over_20": 3.50
+    },
+    "brands_supported": [
+      "All"
+    ],
+    "report_included": true,
+    "notes": "Includes written report with recommendations and estimated costs for suggested improvements."
+  }
+]

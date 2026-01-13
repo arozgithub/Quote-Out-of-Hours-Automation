@@ -1,0 +1,478 @@
+{
+  "name": "automatejob",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Upload Knowledge Base Data",
+        "formDescription": "Upload files containing pricing, product information, and terms for quote generation",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Upload your file(s)",
+              "fieldType": "file",
+              "acceptFileTypes": ".pdf, .csv, .json",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "60c01558-1b76-4ab9-957d-27496d117318",
+      "name": "Upload Knowledge Base Files",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        5040,
+        17056
+      ],
+      "webhookId": "0d1b778e-e91e-491f-9cec-6ec4cb6df5cd"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "intake",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "9ad6ddc5-2a01-4026-a9b7-2e71f86ff8fc",
+      "name": "Webhook - Quote Request",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        5040,
+        17456
+      ],
+      "webhookId": "611f2e94-a7ad-43e3-bacc-9b6ad855ad25"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "webhook1-data",
+        "options": {}
+      },
+      "id": "03e56f02-aac9-40d6-aa90-fcc9244a86ed",
+      "name": "Webhook1",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        5040,
+        17888
+      ],
+      "webhookId": "c03bb85d-06c6-49ee-a6da-3a366c74d81c"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "memoryKey": {
+          "__rl": true,
+          "mode": "id",
+          "value": "vector_store_key"
+        }
+      },
+      "id": "bd5425ea-5422-48ca-8141-fe0513ae79ca",
+      "name": "Insert Data to Store",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        5328,
+        16960
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Use this knowledge base to retrieve pricing, product information, and terms for generating quotes",
+        "memoryKey": {
+          "mode": "id",
+          "value": "vector_store_key"
+        }
+      },
+      "id": "fd45132f-759a-47df-ac44-65c165036b9c",
+      "name": "Query Data Tool",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        5392,
+        17680
+      ]
+    },
+    {
+      "parameters": {
+        "dataType": "binary",
+        "options": {}
+      },
+      "id": "51a55af1-813c-48c4-94f7-6141a226e64f",
+      "name": "Default Data Loader",
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        5472,
+        17184
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "57df6188-dbfd-4a8a-a654-fb2b3e16208a",
+      "name": "Embeddings OpenAI",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        5344,
+        17184
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "PWBzyLQJa7YNcOBo",
+          "name": "OpenAi account aqib"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "id",
+          "value": "gpt-4o-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "id": "1cf975b9-368b-4d38-8a1b-72517a1ad5ea",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        5264,
+        17680
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "PWBzyLQJa7YNcOBo",
+          "name": "OpenAi account aqib"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Request details:\n{{ JSON.stringify($json.body, null, 2) }}",
+        "options": {
+          "systemMessage": "You are a professional quote generation assistant. Your task is to create detailed, accurate quotes based on the information provided in the request and relevant knowledge from the knowledge base.\n\nYour process:\n1. Analyze the request details provided\n2. Use the knowledge_base tool to retrieve relevant pricing, product information, and terms\n3. Generate a comprehensive quote that includes:\n   - Quote ID and date\n   - Customer information from the request\n   - Itemized list of products/services with descriptions\n   - Pricing breakdown (unit prices, quantities, subtotals)\n   - Total amount\n   - Terms and conditions\n   - Validity period\n\nFormat the quote professionally and ensure all information is accurate and complete. Use the knowledge base to fill in any missing details about products, services, or pricing."
+        }
+      },
+      "id": "4b79393c-0621-4085-bf34-2f342e0a2c8f",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        5296,
+        17456
+      ]
+    },
+    {
+      "parameters": {
+        "enableResponseOutput": true,
+        "respondWith": "text",
+        "responseBody": "={{ $json.output }}",
+        "options": {}
+      },
+      "id": "f281e2cd-9a83-4ea1-97a8-eef4b96543f4",
+      "name": "Return Quote to Website",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        5760,
+        17456
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $input.item.json.body;\n\nif (!body || !body.customer_data) {\n  throw new Error('Invalid webhook payload: customer_data missing');\n}\n\nconst customer = body.customer_data;\n\n// AUTHORITATIVE FIELDS (never guessed)\nconst date = customer.visitDate;\nconst customerEmail = customer.contactEmail;\n\nif (!date) {\n  throw new Error('visitDate is missing');\n}\n\nif (!customerEmail) {\n  throw new Error('contactEmail is missing');\n}\n\n// SCHEDULING DEFAULTS (since AI is removed)\nconst startTime = \"09:00\"; // fixed default for now\nconst duration = 2;       // fixed default for now\n\nreturn {\n  date,\n  startTime,\n  duration,\n  summary: `Service Visit - ${customer.contactName}`,\n  description: `Service visit for ${customer.contactName} at ${customer.address}. ${customer.serviceType || 'Service'} for ${customer.elevatorBrand || 'elevator'}.`,\n  customerEmail\n};\n"
+      },
+      "id": "abfff926-4174-45df-b2c1-b439c7eace76",
+      "name": "Parse AI Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5264,
+        17888
+      ]
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "mode": "id",
+          "value": "b3395288193ab0d29dae6e0c7f8bee7beccbb265c65f9d9d0b1ea790cf281d8f@group.calendar.google.com",
+          "__regex": "(^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)"
+        },
+        "start": "={{ $json.date }}T{{ $json.startTime }}:00",
+        "end": "={{ DateTime.fromISO($json.date + 'T' + $json.startTime).plus({ hours: Number($json.duration) }).toISO() }}",
+        "additionalFields": {
+          "attendees": [
+            "={{ $json.customerEmail }}"
+          ],
+          "description": "={{ $json.description }}",
+          "summary": "={{ $json.summary }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        5488,
+        17888
+      ],
+      "id": "64afbd63-ee41-4a9f-b903-ac8f3d06e7a8",
+      "name": "Create an event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "8UsrYaIKLiJdfYfh",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Customer request: {{ $json.body.negotiation_request || $json.body.message || $json.chatInput }}\n\n{{ $if($json.body.quote_data, 'Original Quote Data:\\n' + JSON.stringify($json.body.quote_data, null, 2), 'Note: No quote data was provided in this request. I can still help answer general questions about our services and pricing using the knowledge base.') }}",
+        "options": {
+          "systemMessage": "You are a professional price negotiation assistant for an elevator service company.\n\nCONTEXT:\nYou may have access to the original quote data if it was provided in the request. Use this information to have an informed conversation about pricing and services.\n\nYOUR ROLE:\n1. Help customers understand their quote in detail (if quote data is available)\n2. Answer questions about pricing, services, line items, and terms\n3. Negotiate pricing within company guidelines (max 15% discount from original total)\n4. Gather additional information if the customer needs quote modifications\n5. Use the knowledge_base tool to retrieve detailed pricing information and service specifications\n6. If no quote data is available, still provide helpful information about services and general pricing\n\nNEGOTIATION GUIDELINES:\n- Be professional, empathetic, and consultative\n- Explain the value proposition clearly (quality, reliability, expertise)\n- Only offer discounts when justified:\n  * Volume discounts for multiple units or long-term contracts\n  * Loyalty discounts for returning customers\n  * Urgency-based pricing adjustments\n- Maximum discount: 15% off the original total price\n- Always explain what is included in the price\n- Confirm final pricing clearly before closing\n- Ask clarifying questions when customer requests are unclear\n- If quote data is not available, use the knowledge_base tool to provide general pricing information\n\nWHEN CUSTOMER ACCEPTS NEGOTIATED PRICE:\nProvide a clear summary including:\n- Final agreed price (show original vs. negotiated)\n- All services and items included\n- Terms and conditions\n- Next steps (payment, scheduling, etc.)\n- Any special conditions or agreements made\n\nREMEMBER:\n- You cannot go below 85% of the original quote total (when quote data is available)\n- Be transparent about what you can and cannot adjust\n- If customer asks for something outside your authority, acknowledge it and suggest escalation\n- If no quote data is provided, still be helpful by answering questions using the knowledge base"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        5984,
+        17552
+      ],
+      "id": "1362193d-4dac-451b-bbf3-91d8bb21beab",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "3bd97475-0f8d-44b1-a388-12f25c5d5adc",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        5760,
+        17648
+      ],
+      "id": "72662a5d-c753-43d9-b7a6-020f003aa383",
+      "name": "Webhook neg",
+      "webhookId": "3bd97475-0f8d-44b1-a388-12f25c5d5adc"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        6048,
+        17776
+      ],
+      "id": "95d2be27-afb9-4d5d-aa8e-07370b7b18fa",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "PWBzyLQJa7YNcOBo",
+          "name": "OpenAi account aqib"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        6336,
+        17552
+      ],
+      "id": "8f8a2344-22c4-4705-8bcb-032e49d07648",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Upload Knowledge Base Files": {
+      "main": [
+        [
+          {
+            "node": "Insert Data to Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Insert Data to Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Insert Data to Store",
+            "type": "ai_embedding",
+            "index": 0
+          },
+          {
+            "node": "Query Data Tool",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook - Quote Request": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Query Data Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          },
+          {
+            "node": "AI Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Return Quote to Website",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse AI Response": {
+      "main": [
+        [
+          {
+            "node": "Create an event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Parse AI Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Return Quote to Website": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook neg": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "efcd6232-2ce9-4832-a672-1b8073416306",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ec1f7c6face26bf6b2ece7671d0f3816b3ac244762307e865d9e49d7421aa88d"
+  },
+  "id": "54EzFU4jZ7yQ4LEy",
+  "tags": []
+}
