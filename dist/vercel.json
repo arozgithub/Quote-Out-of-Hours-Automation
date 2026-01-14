@@ -1,0 +1,11 @@
+{
+    "version": 2,
+    "cleanUrls": true,
+    "trailingSlash": false,
+    "rewrites": [
+        {
+            "source": "/email",
+            "destination": "/index_email.html"
+        }
+    ]
+}
